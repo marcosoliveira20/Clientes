@@ -1,5 +1,7 @@
 package com.io.github.marcosoliveira20.clientes.rest;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,14 +31,14 @@ public class ClienteController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Cliente salvar (@RequestBody Cliente cliente) {
+	public Cliente salvar (@RequestBody @Valid Cliente cliente) {
 		return repository.save(cliente);
 		
 	}
 	
 	@GetMapping("{id}")
 	public Cliente encontrarPorId(@PathVariable Integer id) {
-		return repository.findById(id).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		return repository.findById(id).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado!"));
 		
 	}
 	
@@ -49,12 +51,12 @@ public class ClienteController {
 			return Void.TYPE;
 		}		
 				)
-		.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado!"));
 	}
 	
 	@PutMapping("{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void atualizar(@PathVariable Integer id, @RequestBody Cliente clienteAtualizado ) {
+	public void atualizar(@PathVariable Integer id, @RequestBody @Valid Cliente clienteAtualizado ) {
 		
 		repository.findById(id)
 		.map( cliente -> {
@@ -63,7 +65,7 @@ public class ClienteController {
 			 
 		}		
 				)
-		.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado!"));
 	}
 
 }
