@@ -1,7 +1,7 @@
 # Clientes
 Projeto, para controle de clientes usando spring boot e Angular.js
 
-## Conhecimentos aplicados até o momento
+## Conhecimentos aplicados.
 
 - Uso de Spring boot
 - JPA
